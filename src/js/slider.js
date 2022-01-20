@@ -21,7 +21,7 @@ $(document).ready(function() {
                 slidesToShow: 3,
                 prevArrow: '<button class="prev arrow"></button>',
                 nextArrow: '<button class="next arrow"></button>',
-                slidesToScroll: 2
+                slidesToScroll: 1
             }
         }, {
             breakpoint: 768,
@@ -42,7 +42,7 @@ $(document).ready(function() {
         }]
     });
     $('.decoration_slider').slick({
-        infinite: true,
+        infinite: false,
         slidesToShow: 4,
         slidesToScroll: 1,
         responsive: [{

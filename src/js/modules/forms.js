@@ -26,7 +26,9 @@ const forms = () => {
     }
 
     form.forEach((item) => {
+
         item.addEventListener('submit', (e) => {
+            
             e.preventDefault();
             let status = document.createElement('div');
             status.classList.add('status');

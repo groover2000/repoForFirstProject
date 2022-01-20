@@ -15151,6 +15151,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _slider__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./slider */ "./src/js/slider.js");
 /* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/modal */ "./src/js/modules/modal.js");
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
+/* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
+
 
 
 
@@ -15158,7 +15160,68 @@ window.addEventListener("DOMContentLoaded", () => {
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".glazing_slider", ".glazing_block", ".glazing_content", "active");
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".decoration_slider", ".no_click", ".decoration_content >div >div", "after_click");
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])();
 });
+
+/***/ }),
+
+/***/ "./src/js/modules/forms.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/forms.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const forms = () => {
+  const form = document.querySelectorAll("form"),
+        input = document.querySelectorAll('input');
+  const message = {
+    loading: 'Loading...',
+    succes: 'Good',
+    failure: 'Fail'
+  };
+
+  const clearInputs = () => {
+    input.forEach(item => {
+      item.value = '';
+    });
+  };
+
+  const postData = async (url, data) => {
+    document.querySelector('.status').textContent = message.loading;
+    const response = await fetch(url, {
+      method: 'POST',
+      body: data
+    });
+    const text = await response.text();
+    return text;
+  };
+
+  form.forEach(item => {
+    item.addEventListener('submit', e => {
+      e.preventDefault();
+      let status = document.createElement('div');
+      status.classList.add('status');
+      item.appendChild(status);
+      const formData = new FormData(item);
+      postData('assets/server.php', formData).then(res => {
+        console.log(res);
+        status.textContent = message.succes;
+        clearInputs();
+      }).catch(e => {
+        status.textContent = `${message.failure}${e}`;
+      }).finally(() => {
+        setTimeout(() => {
+          status.remove();
+        }, 3000);
+      });
+    });
+  });
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (forms);
 
 /***/ }),
 
@@ -15193,6 +15256,7 @@ const modal = () => {
     modal.addEventListener("click", e => {
       if (e.target === modal) {
         modal.style.display = "none";
+        document.body.style.overflow = "";
       }
     });
   }
@@ -15203,18 +15267,17 @@ const modal = () => {
     inter = setTimeout(function tick() {
       modalWin.style.display = "block";
       document.body.style.overflow = "hidden";
-      console.log(closeB);
-      return inter = setTimeout(tick, 5000);
-    }, 3000); // closeB.addEventListener("click", () => {
-    //     modalWin.style.display = "none";
-    //     document.body.style.overflow = "";
+      return inter = setTimeout(tick, 60000);
+    }, 60000); // closeB.addEventListener("click", () => {
+    //     console.log(1);
     //     clearTimeout(inter);  
     // })
   }
 
   showModal('.popup_engineer_btn', '.popup_engineer', '.popup_close');
   showModal('.phone_link', '.popup', ' .popup .popup_close');
-  showIntervalModal('.popup_engineer', '.popup_enginer .popup_close');
+  showIntervalModal('.popup_engineer', '.popup_engineer .popup_close');
+  showModal('.popup_calc_btn', '.popup_calc', '.popup_calc_close');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modal);

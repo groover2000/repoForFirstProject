@@ -1,6 +1,6 @@
 
 
-const tabs = (mainSelector, tabSelector, contentSelector, activeSelector) => {
+const tabs = (mainSelector, tabSelector, contentSelector, activeSelector, display = 'block') => {
     const main = document.querySelector(mainSelector),
         tab = document.querySelectorAll(tabSelector),
         content = document.querySelectorAll(contentSelector);
@@ -16,7 +16,7 @@ const tabs = (mainSelector, tabSelector, contentSelector, activeSelector) => {
         };
 
         function showContent(index = 0) {
-            content[index].style.display = "block";
+            content[index].style.display = display;
             tab[index].classList.add(activeSelector)
         }
         
@@ -35,6 +35,8 @@ const tabs = (mainSelector, tabSelector, contentSelector, activeSelector) => {
             }
 
         })
+        hideContent();
+        showContent();
        
 };
 
