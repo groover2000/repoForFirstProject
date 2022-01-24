@@ -28,7 +28,7 @@ const forms = () => {
     form.forEach((item) => {
 
         item.addEventListener('submit', (e) => {
-            
+
             e.preventDefault();
             let status = document.createElement('div');
             status.classList.add('status');
@@ -36,7 +36,7 @@ const forms = () => {
             const formData = new FormData(item);
             postData('assets/server.php', formData)
             .then(res => {
-                console.log(res);
+                
                 status.textContent = message.succes
                 clearInputs();
             })

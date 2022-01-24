@@ -9,7 +9,7 @@ const modal = ()=> {
             modal = document.querySelector(popup),
             close = modal.querySelector(closeBtn),
             windows = document.querySelectorAll('[data-modal]')
-            console.log(windows);
+            
            
 
             open.forEach(i => {
