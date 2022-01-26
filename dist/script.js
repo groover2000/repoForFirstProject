@@ -15160,12 +15160,12 @@ __webpack_require__.r(__webpack_exports__);
 
 window.addEventListener("DOMContentLoaded", () => {
   let modalState = {};
+  Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])(modalState);
   Object(_modules_modal__WEBPACK_IMPORTED_MODULE_1__["default"])();
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".glazing_slider", ".glazing_block", ".glazing_content", "active");
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".decoration_slider", ".no_click", ".decoration_content >div >div", "after_click");
   Object(_modules_tabs__WEBPACK_IMPORTED_MODULE_2__["default"])(".balcon_icons", ".balcon_icons_img", ".big_img > img", "do_image_more", "inline-block");
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["default"])();
-  Object(_modules_changeModalState__WEBPACK_IMPORTED_MODULE_4__["default"])(modalState);
 });
 
 /***/ }),
@@ -15181,25 +15181,45 @@ window.addEventListener("DOMContentLoaded", () => {
 __webpack_require__.r(__webpack_exports__);
 const changeModalState = state => {
   const model = document.querySelectorAll('.balcon_icons_img '),
-        windowWidth = document.querySelector('#width'),
-        windowHeight = document.querySelector('#height');
+        windowWidth = document.querySelectorAll('#width'),
+        windowHeight = document.querySelectorAll('#height'),
+        windowType = document.querySelectorAll('#view_type'),
+        windowProfile = document.querySelectorAll('.checkbox');
 
   if (Object.keys(state).length < 1) {
     state['layout'] = 'Тип1';
     console.log(state);
   }
 
-  model.forEach((item, i) => {
-    item.addEventListener('click', () => {
-      let b = item.querySelector('img').alt;
-      state['layout'] = b;
-      console.log('state', state);
+  function getInput(element, event, elementName) {
+    element.forEach(item => {
+      item.addEventListener(event, () => {
+        switch (item.nodeName) {
+          case 'SPAN':
+            console.log('span');
+            break;
+
+          case 'INPUT':
+            if (item.getAttribute('type') == 'checkbox') {
+              console.log('checkbox');
+            } else {
+              console.log('input');
+            }
+
+            break;
+
+          case 'SELECT':
+            console.log('select');
+        }
+      });
     });
-  });
-  windowWidth.addEventListener('input', e => {
-    state['width'] = e.target.value;
-    console.log(state);
-  });
+  }
+
+  getInput(model, 'click', 'layout');
+  getInput(windowWidth, 'input', 'width');
+  getInput(windowHeight, 'input', 'height');
+  getInput(windowType, 'change', 'type');
+  getInput(windowProfile, 'change', 'profile');
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (changeModalState);
@@ -15215,7 +15235,7 @@ const changeModalState = state => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-const forms = () => {
+const forms = state => {
   const form = document.querySelectorAll("form"),
         input = document.querySelectorAll('input');
   const message = {

@@ -1,4 +1,4 @@
-const forms = () => {
+const forms = (state) => {
 
     const form = document.querySelectorAll("form"),
             input = document.querySelectorAll('input');
@@ -34,6 +34,7 @@ const forms = () => {
             status.classList.add('status');
             item.appendChild(status);
             const formData = new FormData(item);
+            
             postData('assets/server.php', formData)
             .then(res => {
                 
