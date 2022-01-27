@@ -34,11 +34,15 @@ const forms = (state) => {
             status.classList.add('status');
             item.appendChild(status);
             const formData = new FormData(item);
+            for (let key in state) {
+                formData.append(key, state[key]);
+            }
             
             postData('assets/server.php', formData)
             .then(res => {
                 
                 status.textContent = message.succes
+                console.log(res)
                 clearInputs();
             })
             .catch((e) => {
